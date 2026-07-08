@@ -1,6 +1,6 @@
 import { intl } from "./modules";
 
-export  const settings = {
+export const settings = {
 	main: {
 		showGuildTag: {
 			name: "Show user guild tag",
