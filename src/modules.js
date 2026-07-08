@@ -136,7 +136,7 @@ export function getIntlString(hash, parameter) {
 
 export function BotAddButtonComponent({ user }) {
     BotAddButton ??= /* @__PURE__ */ Webpack.getByStrings('"user-bot-profile-add-app"');
-    return BdApi.React.createElement(BotAddButton, { user, text: getIntlString("E64YCz") });
+    return <BotAddButton user={user} text={getIntlString("E64YCz")} />;
 }
 
 export function RolePermissionHook({ guildId }) {
@@ -153,9 +153,9 @@ export const headers = () => ({
 });
 
 export const CustomProgressBar = ({ start, end }) => {
-    const [currentTime, setCurrentTime] = react.useState(Date.now());
+    const [currentTime, setCurrentTime] = useState(Date.now());
     
-    react.useEffect(() => {
+    useEffect(() => {
         const update = () => setCurrentTime(Date.now());
         update();
         const interval = setInterval(update, 100);
@@ -164,7 +164,7 @@ export const CustomProgressBar = ({ start, end }) => {
     
     const isRussian = () => {
         try {
-            const localeModule = betterdiscord.Webpack.getModule(m => m?.locale && typeof m.locale === 'string');
+            const localeModule = Webpack.getModule(m => m?.locale && typeof m.locale === 'string');
             return localeModule?.locale === 'ru';
         } catch(e) {
             return false;
@@ -192,18 +192,15 @@ export const CustomProgressBar = ({ start, end }) => {
     };
     
     const timerText = formatTimer(remaining);
-    
     const displayText = isRussian() ? `Осталось ${timerText}` : `${timerText} left`;
     
-    return react.createElement("span", { 
-        className: "timestamp textRow ellipsis"
-    }, displayText);
+    return <span className="timestamp textRow ellipsis">{displayText}</span>;
 };
 
 export const ActivityTimerLocalized = ({ activity }) => {
-    const [currentTime, setCurrentTime] = react.useState(Date.now());
+    const [currentTime, setCurrentTime] = useState(Date.now());
     
-    react.useEffect(() => {
+    useEffect(() => {
         if (!activity) return;
         const update = () => setCurrentTime(Date.now());
         update();
@@ -213,7 +210,7 @@ export const ActivityTimerLocalized = ({ activity }) => {
     
     const isRussian = () => {
         try {
-            const localeModule = betterdiscord.Webpack.getModule(m => m?.locale && typeof m.locale === 'string');
+            const localeModule = Webpack.getModule(m => m?.locale && typeof m.locale === 'string');
             return localeModule?.locale === 'ru';
         } catch(e) {
             return false;
@@ -316,9 +313,7 @@ export const ActivityTimerLocalized = ({ activity }) => {
     
     if (!text) return null;
     
-    return react.createElement("span", {
-        className: "timestamp textRow ellipsis"
-    }, text);
+    return <span className="timestamp textRow ellipsis">{text}</span>;
 };
 
 export function userVoice({ voice }) {
@@ -359,14 +354,16 @@ export function FlexInfo(props) {
     const guildName = GuildStore.getGuild(channel.guild_id)?.name;
     const shouldShowState = guildName || type === "STREAM";
     const stateText = type === "STREAM" ? 
-        intl.intl.formatToPlainString(intl.t["sddlGK"], { server: guildName || "Unknown Server" }) :
-        guildName ? intl.intl.formatToPlainString(intl.t["Xe4de2"], { channelName: guildName }) : null;
+        getIntlString("sddlGK", { server: guildName || "Unknown Server" }) :
+        guildName ? getIntlString("Xe4de2", { channelName: guildName }) : null;
     
-    return BdApi.React.createElement("div", { className, style }, 
-        BdApi.React.createElement("h3", { className: "textRow", style: { display: "flex", alignItems: "center" } }, 
-            VoiceIcon({ channel }),
-            BdApi.React.createElement("h3", { className: "nameWrap nameNormal textRow", style: { fontWeight: "600" } }, channelName)
-        ),
-        shouldShowState && stateText && BdApi.React.createElement("div", { className: "state textRow ellipsis" }, stateText)
+    return (
+        <div className={className} style={style}>
+            <h3 className="textRow" style={{ display: "flex", alignItems: "center" }}>
+                <VoiceIcon channel={channel} />
+                <h3 className="nameWrap nameNormal textRow" style={{ fontWeight: "600" }}>{channelName}</h3>
+            </h3>
+            {shouldShowState && stateText && <div className="state textRow ellipsis">{stateText}</div>}
+        </div>
     );
 }
