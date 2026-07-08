@@ -1,6 +1,8 @@
 # NewOldUserPopouts
 A full, largely accurate restoration of Discord's layout for profile popouts used from 2018 to 2021. Features modern additions such as banners, theme colors, and guild tags.
 
+**Note:** This plugin will always display a user's "global" userPopouts. This means no server-specific pfps, decorations, colors, etc will be displayed. The only exceptions to this are the options to show the user' server nicknames, user's roles in the current server and the user's custom bio in that server, which are available as options in the plugin's settings.
+
 ## Screenshots
 ### _Standard_
 <img width="500" height="855" alt="chrome_289KioJ679" src="https://github.com/user-attachments/assets/fc30a36e-c4d8-4611-b0cb-b6bcafc7173a" />
